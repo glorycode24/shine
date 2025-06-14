@@ -29,7 +29,11 @@ public class UsersService {
 
     @Transactional
     public Users createUser(Users user) {
-  
+        
+        Optional<Users> existingUser = usersRepository.findByEmail(user.getEmail());
+    if (existingUser.isPresent()) {
+        throw new IllegalArgumentException("Email already registered: " + user.getEmail());
+    }
         if (user.getRegistrationDate() == null) {
             user.setRegistrationDate(LocalDateTime.now());
         }

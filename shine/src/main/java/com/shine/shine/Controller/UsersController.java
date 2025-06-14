@@ -43,11 +43,15 @@ public class UsersController {
 
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        if (userService.userExistsByEmail(user.getEmail())) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        try {
+            if (userService.userExistsByEmail(user.getEmail())) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+            Users savedUser = userService.createUser(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
-        Users createdUser = userService.createUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

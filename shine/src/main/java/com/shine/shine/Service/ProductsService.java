@@ -26,6 +26,11 @@ public class ProductsService {
     }
 
     public Products createProduct(Products product) {
+        Optional<Products> existing = productsRepository.findByProductName(product.getProductName());
+if (existing.isPresent()) {
+    throw new IllegalArgumentException("Product already exists: " + product.getProductName());
+}
+
         return productsRepository.save(product);
     }
 
