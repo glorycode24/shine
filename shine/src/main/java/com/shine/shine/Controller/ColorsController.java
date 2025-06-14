@@ -55,5 +55,4 @@ public class ColorsController {
             colorsService.deleteColor(id);
             return ResponseEntity.noContent().build();
         }
-    }
-
+}

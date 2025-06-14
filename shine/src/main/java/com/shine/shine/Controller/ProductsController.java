@@ -41,9 +41,13 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<Products> createProduct(@RequestBody Products product) {
-        Products createdProduct = productService.createProduct(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    public ResponseEntity<?> createProduct(@RequestBody Products product) {
+        try {
+            Products saved = productService.createProduct(product);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
