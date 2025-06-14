@@ -3,6 +3,8 @@ package com.shine.shine.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shine.shine.Entity.Products;
@@ -16,7 +18,11 @@ public class ProductsService {
     public ProductsService(ProductsRepository productRepository) {
         this.productsRepository = productRepository;
     }
-
+// ...existing code...
+public Page<Products> getAllProducts(Pageable pageable) {
+    return productsRepository.findAll(pageable);
+}
+// ...existing code...
     public List<Products> getAllProducts() {
         return productsRepository.findAll();
     }

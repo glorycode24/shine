@@ -15,9 +15,10 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            line-height: 1.6;
+    background: #f5f5f0; /* Light beige background */
+    min-height: 100vh;
+    line-height: 1.6;
+    color: #333; /* Dark text for better contrast */
         }
 
         .container {
@@ -27,15 +28,14 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
+            background: #e8e0d5; /* Beige header */
+    border-bottom: 1px solid #d0c8b8;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
         }
 
         .header-content {
@@ -46,50 +46,44 @@
 
         .logo {
             font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    color: #8b7355; /* Earthy brown for logo */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    background: none;
+    -webkit-text-fill-color: initial;
         }
 
         .tagline {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
-            margin-top: 5px;
+            color: #6d5c45; /* Darker brown for tagline */
+    font-size: 0.9rem;
+    margin-top: 5px;
         }
 
         .cart-indicator {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 25px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: #d0c8b8; /* Light beige */
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #333; /* Dark text */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #b8b0a0;
         }
 
         .cart-indicator:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            background: #c0b8a8;
+    transform: translateY(-2px);
         }
 
         .cart-count {
-            background: #ff4757;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 8px;
-            font-size: 0.8rem;
-            margin-left: 10px;
+            background: #8b7355; /* Earthy brown */
+    color: white;
         }
 
         nav {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            margin-top: 100px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: #e8e0d5; /* Beige navigation */
+    padding: 15px 0;
+    margin-top: 100px;
+    border-bottom: 1px solid #d0c8b8;
         }
 
         .nav-links {
@@ -100,25 +94,26 @@
         }
 
         .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            opacity: 0.5;
-            cursor: not-allowed;
+            color: #333; /* Dark text */
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    opacity: 0.7;
+    cursor: not-allowed;
         }
 
         .nav-links a.enabled {
             opacity: 1;
-            cursor: pointer;
+    cursor: pointer;
         }
 
         .nav-links a.enabled:hover,
         .nav-links a.active {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            background: #d0c8b8; /* Light beige hover */
+    color: #333;
+    transform: translateY(-2px);
         }
 
         .auth-section {
@@ -128,41 +123,41 @@
 
         .auth-toggle {
             display: inline-flex;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 5px;
-            margin-bottom: 30px;
+    background: #d0c8b8; /* Light beige */
+    border-radius: 25px;
+    padding: 5px;
+    margin-bottom: 30px;
         }
 
         .auth-toggle button {
             padding: 10px 30px;
-            border: none;
-            border-radius: 20px;
-            background: transparent;
-            color: rgba(255, 255, 255, 0.7);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    color: #333; /* Dark text */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
         }
 
         .auth-toggle button:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
+            color: #000;
+    background: #c0b8a8; /* Slightly darker beige */
         }
 
         .auth-toggle button.active {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            background: #8b7355; /* Earthy brown */
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
         }
 
         .welcome-message {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
+            background: #8b7355; /* Earthy brown */
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
         }
 
         .step-indicator {
@@ -223,12 +218,12 @@
 
         section {
             margin: 40px 0;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            display: none;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    display: none;
+    border: 1px solid #e0d8c8;
         }
 
         section.active {
@@ -308,23 +303,24 @@
         }
 
         .button {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
+            background: #8b7355; /* Earthy brown */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
         }
 
         .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            background: #7a6345; /* Darker brown */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 115, 85, 0.2);
         }
 
         .button:active {
@@ -516,11 +512,11 @@
         }
 
         footer {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 50px;
+            background: #8b7355; /* Earthy brown */
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 50px;
         }
 
         .loading {
