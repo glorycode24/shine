@@ -42,12 +42,22 @@ public class CategoriesController {
     }
 
     @PostMapping
-    public ResponseEntity<Categories> createCategory(@RequestBody Categories category) {
+    public ResponseEntity<?> createCategory(@RequestBody Categories category) {
+        try {
+            Categories savedCategory = categoryService.addCategory(category);
+            return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        // The following code is unreachable due to the try-catch above.
+        // If you want to check for existing category before adding, move this check before the try-catch.
+        /*
         if (categoryService.categoryExistsByName(category.getCategoryName())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT); 
         }
         Categories createdCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
+        */
     }
 
     @PutMapping("/{id}")
