@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ShineApplication<shine>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.shine.shine.ShineApplication",
+            "projectName": "shine",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
