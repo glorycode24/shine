@@ -15,17 +15,19 @@ public class ProductsService {
 
     private final ProductsRepository productsRepository;
 
-    public ProductsService(ProductsRepository productRepository) {
-        this.productsRepository = productRepository;
-    }
-// ...existing code...
-public Page<Products> getAllProducts(Pageable pageable) {
-    return productsRepository.findAll(pageable);
-}
-// ...existing code...
     public List<Products> getAllProducts() {
         return productsRepository.findAll();
     }
+
+    public ProductsService(ProductsRepository productRepository) {
+        this.productsRepository = productRepository;
+    }
+
+    public Page<Products> getAllProducts(Pageable pageable) {
+    return productsRepository.findAll(pageable);
+}
+
+    
 
     public Optional<Products> getProductById(Integer id) {
         return productsRepository.findById(id);

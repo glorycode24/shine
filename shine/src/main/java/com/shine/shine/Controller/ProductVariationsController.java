@@ -18,7 +18,7 @@ import com.shine.shine.Entity.ProductVariations;
 import com.shine.shine.Service.ProductVariationsService;
 
 @RestController
-@RequestMapping("/api/product-variations")
+@RequestMapping("/api/product_variations")
 public class ProductVariationsController {
 
     private final ProductVariationsService productVariationService;
