@@ -1,23 +1,20 @@
 package com.shine.shine.Controller;
 
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.shine.shine.Entity.Categories;
+
 import com.shine.shine.Entity.Products;
 import com.shine.shine.Service.ProductsService;
 
@@ -27,7 +24,7 @@ public class ProductsController {
 
     @Autowired
     private final ProductsService productService;
-
+    // Add this line near your other @Autowired fields
     public ProductsController(ProductsService productService) {
         this.productService = productService;
     }
@@ -46,45 +43,14 @@ public class ProductsController {
     }
 
     @PostMapping
-public ResponseEntity<Products> addProduct(
-        @RequestParam("productName") String productName,
-        @RequestParam("description") String description,
-        @RequestParam("price") Double price,
-        @RequestParam("stockQuantity") Integer stockQuantity,
-        @RequestParam("categoryId") Long categoryId,
-        @RequestParam("image") MultipartFile image
-) {
-    try {
-        // This is a simplified way to handle image storage for now.
-        // A real app would save the file to a specific folder or cloud service.
-        String imageUrl = image.getOriginalFilename(); 
-
-        Products product = new Products();
-        product.setProductName(productName);
-        product.setDescription(description);
-        product.setPrice(java.math.BigDecimal.valueOf(price));
-        product.setStockQuantity(stockQuantity);
-        product.setImageUrl(imageUrl);
-
-        // --- FIX IS HERE ---
-        // 1. Use your entity class name 'Categories'
-        // 2. We don't need to create a 'new' object. We'll let the service handle it.
-        Categories category = new Categories();
-        category.setCategoryId(categoryId.intValue());
-        product.setCategory(category);
-        
-        // --- ANOTHER FIX IS HERE ---
-        // 3. Call the correct service method name 'addProduct'
-        Products savedProduct = productService.saveProduct(product); 
-        
-        return ResponseEntity.ok(savedProduct);
-
-    } catch (Exception e) {
-        // It's good practice to log the error to see what went wrong
-        e.printStackTrace(); 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<?> createProduct(@RequestBody Products product) {
+        try {
+            Products saved = productService.createProduct(product);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-}
 
     @PutMapping("/{id}")
     public ResponseEntity<Products> updateProduct(@PathVariable("id") Integer id, @RequestBody Products productDetails) {
