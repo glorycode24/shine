@@ -3,9 +3,9 @@ package com.shine.shine.Controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,20 +20,20 @@ import com.shine.shine.Service.ProductsService;
 
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductsController {
 
-    @Autowired
     private final ProductsService productService;
-    // Add this line near your other @Autowired fields
+
     public ProductsController(ProductsService productService) {
         this.productService = productService;
     }
+
     @GetMapping
     public ResponseEntity<List<Products>> getAllProducts() {
         List<Products> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-    // In ProductsController.java
 
     @GetMapping("/{id}")
     public ResponseEntity<Products> getProductById(@PathVariable("id") Integer id) {
@@ -49,6 +49,8 @@ public class ProductsController {
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed");
         }
     }
 
@@ -66,7 +68,7 @@ public class ProductsController {
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") Integer id) {
         boolean deleted = productService.deleteProduct(id);
         if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
