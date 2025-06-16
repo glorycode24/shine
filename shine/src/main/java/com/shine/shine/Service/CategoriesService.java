@@ -10,12 +10,12 @@ import com.shine.shine.Entity.Categories;
 import com.shine.shine.Repository.CategoriesRepository;
 
 @Service
-public class CategoriesService {
 
+public class CategoriesService {
     private final CategoriesRepository categoriesRepository;
 
-    public CategoriesService(CategoriesRepository categoryRepository) {
-        this.categoriesRepository = categoryRepository;
+    public CategoriesService(CategoriesRepository categoriesRepository) {
+        this.categoriesRepository = categoriesRepository;
     }
 
     public List<Categories> getAllCategories() {
@@ -30,7 +30,15 @@ public class CategoriesService {
     public Categories createCategory(Categories category) {
         return categoriesRepository.save(category);
     }
+    @Transactional
 
+public Categories addCategory(Categories category) {
+    Optional<Categories> existing = categoriesRepository.findByCategoryName(category.getCategoryName());
+    if (existing.isPresent()) {
+        throw new IllegalArgumentException("Category name already exists.");
+    }
+    return categoriesRepository.save(category);
+}
     @Transactional
     public Categories updateCategory(Integer id, Categories categoryDetails) {
         Optional<Categories> optionalCategory = categoriesRepository.findById(id);
