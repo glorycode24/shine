@@ -16,7 +16,7 @@ public class WebConfig {
         registry.addMapping("/**")
           .allowedOrigins(
             "http://localhost:3000",  // for user frontend
-            "http://localhost:5173"   // for admin frontend
+            "http://localhost:3001"   // for admin frontend
           )
           .allowedMethods("GET", "POST", "PUT", "DELETE")
           .allowCredentials(true);
