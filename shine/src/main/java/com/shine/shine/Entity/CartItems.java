@@ -26,6 +26,10 @@ public class CartItems {
     @JoinColumn(name = "VariationID", nullable = false) 
     private ProductVariations productVariation;
 
+    @ManyToOne // This defines the relationship: Many cart items can point to ONE product.
+    @JoinColumn(name = "ProductID", nullable = false) // This specifies the foreign key column in this table.
+    private Products product;
+
     @Column(name = "Quantity", nullable = false)
     private Integer quantity;
 
@@ -65,6 +69,14 @@ public class CartItems {
         return quantity;
     }
 
+    public Products getProduct() {
+        return product;
+    }
+
+    public void setProduct(Products product) {
+        this.product = product;
+    }
+    
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
