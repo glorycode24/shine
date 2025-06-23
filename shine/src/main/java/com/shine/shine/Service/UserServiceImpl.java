@@ -3,30 +3,45 @@ package com.shine.shine.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.shine.shine.dto.UserDto;
 import org.springframework.stereotype.Service; 
 import org.springframework.transaction.annotation.Transactional;
-
 import com.shine.shine.Entity.Users;
 import com.shine.shine.Repository.UsersRepository;
 
 @Service
-public class UsersService {
-
+public class UserServiceImpl implements UserService {
+    
     private final UsersRepository usersRepository;
 
-    public UsersService(UsersRepository usersRepository) {
+    public UserServiceImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
-
+    @Override
+    public UserDto getCurrentUserProfile() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else {
+            throw new IllegalStateException("User is not authenticated");
+        }
+        Users user = usersRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
+        return convertToDto(user);
+    }
+    @Override
     public List<Users> getAllUsers() {
         return usersRepository.findAll();
     }
-
+    @Override
     public Optional<Users> getUserById(Integer id) {
         return usersRepository.findById(id);
     }
-
+    @Override
     @Transactional
     public Users createUser(Users user) {
         
@@ -39,7 +54,7 @@ public class UsersService {
         }
         return usersRepository.save(user);
     }
-
+    @Override
     @Transactional
     public Users updateUser(Integer id, Users userDetails) {
         Optional<Users> optionalUser = usersRepository.findById(id);
@@ -57,7 +72,7 @@ public class UsersService {
             return null;
         }
     }
-
+    @Override
     @Transactional
     public boolean deleteUser(Integer id) {
         if (usersRepository.existsById(id)) {
@@ -66,12 +81,22 @@ public class UsersService {
         }
         return false;
     }
-
+    @Override
     public Optional<Users> getUserByEmail(String email) {
         return usersRepository.findByEmail(email);
     }
-
+    @Override
     public boolean userExistsByEmail(String email) {
         return usersRepository.existsByEmail(email);
+    }
+
+    private UserDto convertToDto(Users user) {
+        UserDto dto = new UserDto();
+        dto.setUserId(user.getUserId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
+        return dto;
     }
 }
