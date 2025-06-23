@@ -18,7 +18,7 @@ import com.shine.shine.Entity.OrderItems;
 import com.shine.shine.Service.OrderItemsService;
 
 @RestController
-@RequestMapping("/api/order-items")
+@RequestMapping("/api/order_items")
 public class OrderItemsController {
 
     private final OrderItemsService orderItemService;
