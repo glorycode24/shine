@@ -39,18 +39,26 @@ public class Orders {
     @JoinColumn(name = "BillingAddressID", nullable = false) 
     private Addresses billingAddress;
 
+    @Column(name = "Subtotal", nullable = false, precision = 10, scale = 2)
+    private BigDecimal subtotal;
+
+    @Column(name = "Tax", nullable = false, precision = 10, scale = 2)
+    private BigDecimal tax;
+
     @Column(name = "TotalAmount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
     // --- Constructors ---
     public Orders() {}
 
-    public Orders(Users user, LocalDateTime orderDate, String orderStatus, Addresses shippingAddress, Addresses billingAddress, BigDecimal totalAmount) {
+    public Orders(Users user, LocalDateTime orderDate, String orderStatus, Addresses shippingAddress, Addresses billingAddress, BigDecimal subtotal, BigDecimal tax, BigDecimal totalAmount) {
         this.user = user;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.shippingAddress = shippingAddress;
         this.billingAddress = billingAddress;
+        this.subtotal = subtotal;
+        this.tax = tax;
         this.totalAmount = totalAmount;
     }
 
@@ -103,6 +111,22 @@ public class Orders {
         this.billingAddress = billingAddress;
     }
 
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
@@ -118,6 +142,8 @@ public class Orders {
                 ", user=" + (user != null ? user.getEmail() : "null") +
                 ", orderDate=" + orderDate +
                 ", orderStatus='" + orderStatus + '\'' +
+                ", subtotal=" + subtotal +
+                ", tax=" + tax +
                 ", shippingAddressId=" + (shippingAddress != null ? shippingAddress.getAddressId() : "null") +
                 ", billingAddressId=" + (billingAddress != null ? billingAddress.getAddressId() : "null") +
                 ", totalAmount=" + totalAmount +

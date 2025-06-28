@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.shine.shine.Service.ProductsService;
 
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductsController {
 
     private final ProductsService productService;
@@ -41,9 +43,15 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<Products> createProduct(@RequestBody Products product) {
-        Products createdProduct = productService.createProduct(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    public ResponseEntity<?> createProduct(@RequestBody Products product) {
+        try {
+            Products saved = productService.createProduct(product);
+            return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed");
+        }
     }
 
     @PutMapping("/{id}")
@@ -60,7 +68,7 @@ public class ProductsController {
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") Integer id) {
         boolean deleted = productService.deleteProduct(id);
         if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

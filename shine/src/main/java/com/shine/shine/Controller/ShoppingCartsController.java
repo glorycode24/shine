@@ -18,7 +18,7 @@ import com.shine.shine.Entity.ShoppingCarts;
 import com.shine.shine.Service.ShoppingCartsService;
 
 @RestController
-@RequestMapping("/api/shopping-carts")
+@RequestMapping("/api/shopping_carts")
 public class ShoppingCartsController {
 
     private final ShoppingCartsService shoppingCartService;

@@ -16,15 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shine.shine.Entity.Users;
-import com.shine.shine.Service.UsersService;
+import com.shine.shine.Service.UserServiceImpl;
+import com.shine.shine.dto.UserDto;
 
 @RestController
 @RequestMapping("/api/users") 
 public class UsersController {
 
-    private final UsersService userService;
+    private final UserServiceImpl userService;
 
-    public UsersController(UsersService usersService) {
+    public UsersController(UserServiceImpl usersService) {
         this.userService = usersService;
     }
 
@@ -34,20 +35,24 @@ public class UsersController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable("id") Integer id) {
-        Optional<Users> user = userService.getUserById(id);
-        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                   .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> getMyProfile() {
+        // We'll add the logic to get the current user's details
+        UserDto userDto = userService.getCurrentUserProfile();
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        if (userService.userExistsByEmail(user.getEmail())) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        try {
+            if (userService.userExistsByEmail(user.getEmail())) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+            Users savedUser = userService.createUser(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
-        Users createdUser = userService.createUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
