@@ -1,9 +1,10 @@
 package com.shine.shine.Service;
 
-import com.shine.shine.Entity.Users;
-import com.shine.shine.dto.UserDto;
 import java.util.List;
 import java.util.Optional;
+
+import com.shine.shine.Entity.Users;
+import com.shine.shine.dto.UserDto;
 
 // This is the "contract".
 public interface UserService {
@@ -17,4 +18,6 @@ public interface UserService {
     boolean deleteUser(Integer id);
     Optional<Users> getUserByEmail(String email);
     boolean userExistsByEmail(String email);
+    List<UserDto> findAllUsersAsDto();
+    boolean deleteUserById(Integer userId);
 }
