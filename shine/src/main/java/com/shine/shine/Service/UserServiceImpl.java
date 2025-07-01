@@ -3,14 +3,17 @@ package com.shine.shine.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import com.shine.shine.dto.UserDto;
 import org.springframework.stereotype.Service; 
 import org.springframework.transaction.annotation.Transactional;
+
 import com.shine.shine.Entity.Users;
 import com.shine.shine.Repository.UsersRepository;
+import com.shine.shine.dto.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -99,4 +102,22 @@ public class UserServiceImpl implements UserService {
         dto.setRole(user.getRole());
         return dto;
     }
+
+    @Override
+    public List<UserDto> findAllUsersAsDto() {
+        return usersRepository.findAll() // Fetch all User entities
+                .stream()                 // Convert to a stream
+                .map(this::convertToDto)  // Convert each User to a UserDto
+                .collect(Collectors.toList()); // Collect the results into a list
+    }
+
+    @Override
+    public boolean deleteUserById(Integer userId) {
+        if (usersRepository.existsById(userId)) {
+            usersRepository.deleteById(userId);
+            return true;
+        }
+        return false;
+    }
+    
 }
