@@ -18,7 +18,7 @@ import com.shine.shine.Entity.CartItems;
 import com.shine.shine.Service.CartItemsService;
 
 @RestController
-@RequestMapping("/api/cart-items")
+@RequestMapping("/api/cart_items")
 public class CartItemsController {
 
     private final CartItemsService cartItemService;

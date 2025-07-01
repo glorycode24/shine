@@ -15,7 +15,7 @@ import com.shine.shine.Entity.Colors;
 import com.shine.shine.Service.ColorsService;
 
 @RestController
-@RequestMapping("/colors")
+@RequestMapping("/api/colors")
 public class ColorsController {
 
         private final ColorsService colorsService;
@@ -55,5 +55,4 @@ public class ColorsController {
             colorsService.deleteColor(id);
             return ResponseEntity.noContent().build();
         }
-    }
-
+}

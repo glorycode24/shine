@@ -24,6 +24,10 @@ public Optional<Colors> getColorById(int id) {
 }
 
 public Colors createColor(Colors color) {
+    Optional<Colors> existingColor = colorsRepository.findByColorName(color.getColorName());
+    if (existingColor.isPresent()) {
+        throw new IllegalArgumentException("Color name already exists: " + color.getColorName());
+    }
     return colorsRepository.save(color);
 }
 
@@ -32,10 +36,11 @@ public void deleteColor(int id) {
 }
 
 public Colors updateColors(int id, Colors colorDetails) {
-    return colorsRepository.findById(id).map(color -> {
-        color.setColorName(colorDetails.getColorName());
-        return colorsRepository.save(color);
-    }).orElseThrow(() -> new RuntimeException("Color not found"));
+    Colors color = colorsRepository.findById(id).map(existingColor -> {
+        existingColor.setColorName(colorDetails.getColorName());
+        return existingColor;
+    }).orElseThrow(() -> new IllegalArgumentException("Color not found with id: " + id));
 
+    return colorsRepository.save(color);
 }
 }
