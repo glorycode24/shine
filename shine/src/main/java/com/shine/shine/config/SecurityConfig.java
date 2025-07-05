@@ -53,8 +53,11 @@ public class SecurityConfig {
                 // Allow public access to these specific URL patterns
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/products/**").permitAll()
+                .requestMatchers("/api/products/**").hasRole("ADMIN")
                 .requestMatchers("/api/categories/**").permitAll()
+                .requestMatchers("/api/stock/**").permitAll() // Allow stock checks without auth
+                // Require authentication for cart operations
+                .requestMatchers("/api/cart/**").authenticated()
                 // Require authentication for any other request that is not listed above
                 .anyRequest().authenticated()
             )
