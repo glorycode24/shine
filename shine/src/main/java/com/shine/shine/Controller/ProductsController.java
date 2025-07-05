@@ -2,7 +2,7 @@ package com.shine.shine.Controller;
 
 import java.util.List;
 import java.util.Optional;
-
+import com.shine.shine.dto.ProductWithVariationsRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,6 +42,16 @@ public class ProductsController {
                       .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("/with-variations")
+    public ResponseEntity<?> createProductWithVariations(@RequestBody ProductWithVariationsRequest request) {
+        try {
+            productService.createProductWithVariations(request);
+            return ResponseEntity.ok("Product and variations created successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody Products product) {
         try {

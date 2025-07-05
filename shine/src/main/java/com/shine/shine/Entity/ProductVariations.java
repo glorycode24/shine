@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "product_variations") 
@@ -32,6 +33,9 @@ public class ProductVariations {
 
     @Column(name = "AdditionalStock", nullable = false)
     private Integer additionalStock;
+
+    @Column(name = "Price", precision = 10, scale = 2)
+    private BigDecimal price;
 
     public ProductVariations() {}
 
@@ -82,6 +86,14 @@ public class ProductVariations {
         this.additionalStock = additionalStock;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "ProductVariations{" +
@@ -90,6 +102,7 @@ public class ProductVariations {
                 ", size=" + (size != null ? size.getSizeName() : "null") +
                 ", color=" + (color != null ? color.getColorName() : "null") +
                 ", additionalStock=" + additionalStock +
+                ", price=" + price +
                 '}';
     }
 }
